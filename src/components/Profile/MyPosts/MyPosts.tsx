@@ -7,14 +7,13 @@ export const MyPosts = () => {
         <div className={styles.content}>
             My posts
             <div>
-                <textarea></textarea>
+                <textarea/>
                 <button>Add post</button>
                 <button>Remove post</button>
             </div>
             <div className={styles.posts}>
-                <Post title='post 1'/>
-                <Post title='post 2'/>
-                <Post title='post 3'/>
+                <Post title='Hi! How are you?'/>
+                <Post title='Need to integrate Typescript'/>
             </div>
         </div>
     );
