@@ -3,3 +3,9 @@
     grid-template-columns: 2fr 10fr;
 }
 
+.messageWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+

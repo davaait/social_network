@@ -1,19 +1,36 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import styles from './MyPosts.module.css'
 import {Post} from "./Post/Post";
+import {PostsType} from "../../../redux/state";
 
-export const MyPosts = () => {
+type MyPostsPropsType = {
+    posts: Array<PostsType>,
+    addPost: (textFromInput: string) => void
+}
+
+export const MyPosts = ({posts, ...props}: MyPostsPropsType) => {
+    const postsElement =
+        posts.map( m => <Post key={m.id} message={m.message} likesCount={m.likesCount}/>)
+
+    const ref = useRef<HTMLInputElement>(null);
+
+    const addPost = () => {
+        if(ref.current !== null) {
+            let textFromInput = ref.current.value
+            props.addPost(textFromInput)
+            ref.current.value = ''
+        }
+    }
+
     return (
         <div className={styles.content}>
-            My posts
+            <h3>My posts</h3>
             <div>
-                <textarea/>
-                <button>Add post</button>
-                <button>Remove post</button>
+                <input autoFocus type="text" ref={ref}/>
+                <button onClick={ addPost }>Add post</button>
             </div>
             <div className={styles.posts}>
-                <Post title='Hi! How are you?'/>
-                <Post title='Need to integrate Typescript'/>
+                {postsElement}
             </div>
         </div>
     );

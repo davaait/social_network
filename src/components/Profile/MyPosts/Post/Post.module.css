@@ -1,5 +1,8 @@
 .postWrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+    grid-template-rows: 2fr 1fr;
+    padding-left: 10px;
 }
 
 .postWrapper img {
@@ -9,6 +12,6 @@
 }
 
 .item {
-    margin-left: 10px;
+    margin-left: 15px;
     align-self: center;
 }

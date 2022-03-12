@@ -5,8 +5,14 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {Profile} from "./components/Profile/Profile";
 import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {StateType} from "./redux/state";
 
-const App = () => {
+type AppPropsType = {
+    appState: StateType,
+    addPost: (textFromInput: string) => void
+}
+
+const App = ({appState, addPost, ...props}: AppPropsType) => {
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
@@ -14,11 +20,17 @@ const App = () => {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Routes>
-                        <Route path='/profile/*' element={<Profile/>}/>
-                        <Route path='/dialogs/*' element={<Dialogs/>}/>
-                        <Route path='/news/*' element={<Dialogs/>}/>
-                        <Route path='/music/*' element={<Dialogs/>}/>
-                        <Route path='/settings/*' element={<Dialogs/>}/>
+                        <Route path='/profile/*' element={<Profile
+                            posts={appState.profilePage.posts}
+                            addPost={addPost}
+                        />}/>
+                        <Route path='/dialogs/*' element={<Dialogs
+                            dialogs={appState.profilePage.dialogs}
+                            messages={appState.messagesPage.messages}
+                        />}/>
+                        {/*<Route path='/news/*' element={<Dialogs/>}/>*/}
+                        {/*<Route path='/music/*' element={<Dialogs/>}/>*/}
+                        {/*<Route path='/settings/*' element={<Dialogs/>}/>*/}
                     </Routes>
                 </div>
             </div>
@@ -27,3 +39,5 @@ const App = () => {
 }
 
 export default App
+
+// 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
