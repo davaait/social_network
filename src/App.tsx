@@ -9,10 +9,10 @@ import {StateType} from "./redux/state";
 
 type AppPropsType = {
     appState: StateType,
-    addPost: (textFromInput: string) => void
+    dispatch: (action: any) => void
 }
 
-const App = ({appState, addPost, ...props}: AppPropsType) => {
+const App = ({appState, ...props}: AppPropsType) => {
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
@@ -21,11 +21,11 @@ const App = ({appState, addPost, ...props}: AppPropsType) => {
                 <div className='app-wrapper-content'>
                     <Routes>
                         <Route path='/profile/*' element={<Profile
-                            posts={appState.profilePage.posts}
-                            addPost={addPost}
+                            profilePage={appState.profilePage}
+                            dispatch={props.dispatch}
                         />}/>
                         <Route path='/dialogs/*' element={<Dialogs
-                            dialogs={appState.profilePage.dialogs}
+                            dialogs={appState.dialogsPage.dialogs}
                             messages={appState.messagesPage.messages}
                         />}/>
                         {/*<Route path='/news/*' element={<Dialogs/>}/>*/}
