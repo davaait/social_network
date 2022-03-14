@@ -3,6 +3,10 @@
     grid-template-columns: 2fr 10fr;
 }
 
+.messagesBlock {
+    display: flex;
+}
+
 .messageWrapper {
     display: flex;
     flex-direction: column;

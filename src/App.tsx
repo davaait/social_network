@@ -26,7 +26,7 @@ const App = ({appState, ...props}: AppPropsType) => {
                         />}/>
                         <Route path='/dialogs/*' element={<Dialogs
                             dialogs={appState.dialogsPage.dialogs}
-                            messages={appState.messagesPage.messages}
+                            messagePage={appState.messagesPage}
                         />}/>
                         {/*<Route path='/news/*' element={<Dialogs/>}/>*/}
                         {/*<Route path='/music/*' element={<Dialogs/>}/>*/}

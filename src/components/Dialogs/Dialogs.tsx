@@ -1,31 +1,42 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import styles from './Dialogs.module.css'
 import {DialogItem} from "./Dialog/DialogItem";
 import {Message} from "./message/Message";
-import {DialogsType, MessagesType} from "../../redux/state";
+import {DialogsType, MessagePageType, store} from "../../redux/state";
+import {sendMessageAC, updateNewMessageBodyAC} from "../../redux/dialogs-reducer";
 
 type DialogsPropsType = {
     dialogs: Array<DialogsType>,
-    messages: Array<MessagesType>
+    messagePage: MessagePageType
 }
 
-export const Dialogs = ({dialogs, messages, ...props}: DialogsPropsType) => {
+export const Dialogs = ({dialogs, ...props}: DialogsPropsType) => {
+    const dialogsElements = dialogs.map(d => <DialogItem userID={d.id} userName={d.name} key={d.id}/>)
+    const messagesElements = props.messagePage.messages.map(m => <Message dialogText={m.message} key={m.id}/>)
+    const newMessageBody = props.messagePage.newMessageBody
+    const onSendMessage = () => {
+        store.dispatch(sendMessageAC())
+    }
+    const onNewMessageChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
+        const body = e.currentTarget.value
+        store.dispatch(updateNewMessageBodyAC(body))
+    }
     return (
         <div className={styles.dialogsWrapper}>
             <div className={styles.usersWrapper}>
-                <DialogItem userID={dialogs[0].id} userName={dialogs[0].name}/>
-                <DialogItem userID={dialogs[1].id} userName={dialogs[1].name}/>
-                <DialogItem userID={dialogs[2].id} userName={dialogs[2].name}/>
-                <DialogItem userID={dialogs[3].id} userName={dialogs[3].name}/>
-                <DialogItem userID={dialogs[4].id} userName={dialogs[4].name}/>
-                <DialogItem userID={dialogs[5].id} userName={dialogs[5].name}/>
+                <div>{dialogsElements}</div>
             </div>
-            <div className={styles.messageWrapper}>
-                <Message dialogText={messages[0].message}/>
-                <Message dialogText={messages[1].message}/>
-                <Message dialogText={messages[2].message}/>
-                <Message dialogText={messages[3].message}/>
-                <Message dialogText={messages[4].message}/>
+            <div className={styles.messagesBlock}>
+                <div className={styles.messageWrapper}>{messagesElements}</div>
+                <div>
+                    <div><textarea
+                        value={newMessageBody}
+                        onChange={onNewMessageChange}
+                        placeholder="Enter your message..."/></div>
+                    <div>
+                        <button onClick={onSendMessage}>Send</button>
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -1,5 +1,4 @@
 import React from "react";
-import styles from './Message.module.css'
 
 type MessagePropsType = {
     dialogText: string

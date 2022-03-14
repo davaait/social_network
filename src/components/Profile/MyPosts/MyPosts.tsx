@@ -2,6 +2,7 @@ import React, {useRef} from 'react';
 import styles from './MyPosts.module.css'
 import {Post} from "./Post/Post";
 import {PostsType} from "../../../redux/state";
+import {addPostAC, updateNewPostTextAC} from "../../../redux/profile-reducer";
 
 type MyPostsPropsType = {
     posts: Array<PostsType>,
@@ -16,12 +17,12 @@ export const MyPosts = ({posts, ...props}: MyPostsPropsType) => {
     const ref = useRef<HTMLInputElement>(null);
 
     const addPost = () => {
-            props.dispatch({type: 'ADD-POST'})
+            props.dispatch(addPostAC())
         }
     const onPostChange = () => {
         if (ref.current !== null) {
             let textFromInput = ref.current.value
-            props.dispatch({type: 'UPDATE-NEW-POST-TEXT', textFromInput})
+            props.dispatch(updateNewPostTextAC(textFromInput))
         }
     }
     return (

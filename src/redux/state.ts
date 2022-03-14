@@ -1,3 +1,6 @@
+import {addPostAC, profileReducer, updateNewPostTextAC} from "./profile-reducer";
+import {dialogsReducer, sendMessageAC, updateNewMessageBodyAC} from "./dialogs-reducer";
+
 export type PostsType = {
     id: number,
     message: string,
@@ -24,7 +27,8 @@ export type DialogsPageType = {
 }
 
 export type MessagePageType = {
-    messages: Array<MessagesType>
+    messages: Array<MessagesType>,
+    newMessageBody: string
 }
 
 export type StateType = {
@@ -39,7 +43,7 @@ export type StoreType = {
     _callSubscriber: any,
     addPost: () => void,
     updateNewPostText: (newText: string) => void,
-    subscribe: (observer: any) => void,
+    subscribe: (callback: () => void) => void,
     dispatch: (action: any) => void
 }
 
@@ -72,49 +76,40 @@ export const store: StoreType = {
                 {id: 4, message: 'They moved to Mexico city'},
                 {id: 5, message: 'Yes!'},
             ],
+            newMessageBody: ""
         },
     },
     getState() {
         return this._state
     },
-    subscribe (observer: any) {
-        this._callSubscriber = observer;
+    subscribe(callback) {
+        this._callSubscriber = callback;
     },
     _callSubscriber() {
         console.log('State changed')
     },
-    addPost () {
+    addPost() {
         let newPost = {
             id: 5,
             message: this._state.profilePage.newPostText,
             likesCount: 0
         }
         this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber(this._state)
+        this._callSubscriber()
     },
-    updateNewPostText (newText: string) {
+    updateNewPostText(newText: string) {
         this._state.profilePage.newPostText = newText
-        this._callSubscriber(this._state)
+        this._callSubscriber()
     },
-    dispatch(action: any) {
-        switch (action.type) {
-            case 'ADD-POST': {
-                let newPost = {
-                    id: 5,
-                    message: this._state.profilePage.newPostText,
-                    likesCount: 0
-                }
-                this._state.profilePage.posts.push(newPost)
-                this._state.profilePage.newPostText = ''
-                this._callSubscriber(this._state)
-                break
-            }
-            case 'UPDATE-NEW-POST-TEXT': {
-                this._state.profilePage.newPostText = action.newText
-                this._callSubscriber(this._state)
-                break
-            }
-        }
+    dispatch(action: GenerealACType) {
+
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        // this._state.sidebar = sidebarReducer(this._state.sidebarPage, action)
+
+        this._callSubscriber(this._state)
+
     },
 }
+
+export type GenerealACType = ReturnType<typeof addPostAC> | ReturnType<typeof updateNewPostTextAC> | ReturnType<typeof updateNewMessageBodyAC> | ReturnType<typeof sendMessageAC>
