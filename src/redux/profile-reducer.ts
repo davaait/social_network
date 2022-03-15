@@ -1,19 +1,29 @@
-import {StateType, store} from "./state";
+import {ProfilePageType} from "./store";
 
-export const profileReducer = (state: StateType, action: any) => {
+const initialState = {
+    posts: [
+        {id: 1, message: 'Hi', likesCount: 12},
+        {id: 2, message: 'How are you?', likesCount: 23},
+        {id: 3, message: 'You need to integrate Redux!', likesCount: 2},
+        {id: 4, message: 'BlaBla', likesCount: 4},
+    ],
+    newPostText: 'it-kamasutra.com',
+}
+
+export const profileReducer = (state: ProfilePageType = initialState, action: any) => {
     switch (action.type) {
         case 'ADD-POST': {
             let newPost = {
                 id: 5,
-                message: state.profilePage.newPostText,
+                message: state.newPostText,
                 likesCount: 0
             }
-            state.profilePage.posts.push(newPost)
-            state.profilePage.newPostText = ''
+            state.posts.push(newPost)
+            state.newPostText = ''
             return state
         }
         case 'UPDATE-NEW-POST-TEXT': {
-            state.profilePage.newPostText = action.textFromInput
+            state.newPostText = action.textFromInput
             return state
         }
         default:

@@ -5,7 +5,7 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {Profile} from "./components/Profile/Profile";
 import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {StateType} from "./redux/state";
+import {StateType} from "./redux/store";
 
 type AppPropsType = {
     appState: StateType,
@@ -25,8 +25,7 @@ const App = ({appState, ...props}: AppPropsType) => {
                             dispatch={props.dispatch}
                         />}/>
                         <Route path='/dialogs/*' element={<Dialogs
-                            dialogs={appState.dialogsPage.dialogs}
-                            messagePage={appState.messagesPage}
+                            dialogsPage={appState.dialogsPage}
                         />}/>
                         {/*<Route path='/news/*' element={<Dialogs/>}/>*/}
                         {/*<Route path='/music/*' element={<Dialogs/>}/>*/}
@@ -40,4 +39,4 @@ const App = ({appState, ...props}: AppPropsType) => {
 
 export default App
 
-// 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
+// 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

@@ -24,26 +24,26 @@ export type ProfilePageType = {
 
 export type DialogsPageType = {
     dialogs: Array<DialogsType>,
+    messages: Array<MessagesType>,
+    newMessageBody: string,
 }
 
-export type MessagePageType = {
-    messages: Array<MessagesType>,
-    newMessageBody: string
+export type SidebarType = {
+    id: number,
+    name: string,
 }
 
 export type StateType = {
     profilePage: ProfilePageType,
     dialogsPage: DialogsPageType,
-    messagesPage: MessagePageType,
+    sidebar: Array<SidebarType>,
 }
 
 export type StoreType = {
     _state: StateType,
     getState: () => StateType,
     _callSubscriber: any,
-    addPost: () => void,
-    updateNewPostText: (newText: string) => void,
-    subscribe: (callback: () => void) => void,
+    subscribe: (callback: (state: StateType) => void) => void,
     dispatch: (action: any) => void
 }
 
@@ -67,8 +67,6 @@ export const store: StoreType = {
                 {id: 5, name: 'Viktor'},
                 {id: 6, name: 'Valera'},
             ],
-        },
-        messagesPage: {
             messages: [
                 {id: 1, message: 'Hi'},
                 {id: 2, message: 'How is your dog?'},
@@ -78,6 +76,10 @@ export const store: StoreType = {
             ],
             newMessageBody: ""
         },
+        sidebar: [
+            {id: 1, name: 'John'},
+            {id: 2, name: 'Will'}
+        ]
     },
     getState() {
         return this._state
@@ -87,19 +89,6 @@ export const store: StoreType = {
     },
     _callSubscriber() {
         console.log('State changed')
-    },
-    addPost() {
-        let newPost = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._callSubscriber()
-    },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber()
     },
     dispatch(action: GenerealACType) {
 
