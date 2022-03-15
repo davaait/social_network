@@ -1,4 +1,4 @@
-import {DialogsPageType} from "./store";
+import {DialogsPageType, GenerealACType} from "./store";
 
 const initialState = {
     dialogs: [
@@ -19,7 +19,7 @@ const initialState = {
     newMessageBody: ""
 }
 
-export const dialogsReducer = (state: DialogsPageType = initialState, action: any) => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: GenerealACType) => {
     switch (action.type) {
         case 'UPDATE-NEW-MESSAGE-BODY': {
             state.newMessageBody = action.body

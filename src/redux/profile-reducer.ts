@@ -1,4 +1,4 @@
-import {ProfilePageType} from "./store";
+import {GenerealACType, ProfilePageType} from "./store";
 
 const initialState = {
     posts: [
@@ -10,7 +10,7 @@ const initialState = {
     newPostText: 'it-kamasutra.com',
 }
 
-export const profileReducer = (state: ProfilePageType = initialState, action: any) => {
+export const profileReducer = (state: ProfilePageType = initialState, action: GenerealACType) => {
     switch (action.type) {
         case 'ADD-POST': {
             let newPost = {

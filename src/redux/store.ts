@@ -44,7 +44,7 @@ export type StoreType = {
     getState: () => StateType,
     _callSubscriber: any,
     subscribe: (callback: (state: StateType) => void) => void,
-    dispatch: (action: any) => void
+    dispatch: (action: GenerealACType) => void
 }
 
 export const store: StoreType = {
@@ -90,14 +90,11 @@ export const store: StoreType = {
     _callSubscriber() {
         console.log('State changed')
     },
-    dispatch(action: GenerealACType) {
-
+    dispatch(action) {
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
         // this._state.sidebar = sidebarReducer(this._state.sidebarPage, action)
-
         this._callSubscriber(this._state)
-
     },
 }
 
