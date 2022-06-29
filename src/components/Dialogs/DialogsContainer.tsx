@@ -1,5 +1,5 @@
 import React from 'react';
-import {DialogsPageType, GenerealACType} from "../../redux/store";
+import {DialogsPageType} from "../../redux/store";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {sendMessageAC} from "../../redux/dialogs-reducer";
@@ -34,4 +34,3 @@ const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
 }
 
 export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
-

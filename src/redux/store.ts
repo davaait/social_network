@@ -47,7 +47,7 @@ export type StoreType = {
     dispatch: (action: GenerealACType) => void
 }
 
-export const store: StoreType = {
+export const store: any = {
     _state: {
         profilePage: {
             posts: [
@@ -84,13 +84,13 @@ export const store: StoreType = {
     getState() {
         return this._state
     },
-    subscribe(callback) {
+    subscribe(callback:any) {
         this._callSubscriber = callback;
     },
     _callSubscriber() {
         console.log('State changed')
     },
-    dispatch(action) {
+    dispatch(action:any) {
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
         // this._state.sidebar = sidebarReducer(this._state.sidebarPage, action)

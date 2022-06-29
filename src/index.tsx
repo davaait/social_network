@@ -2,12 +2,12 @@ import reportWebVitals from './reportWebVitals';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import {App} from './App';
 import {StateType, store} from './redux/store'
 import {Provider} from "react-redux";
 
 let rerenderEntireTree = (state: StateType) => {
-    ReactDOM.render(
+  ReactDOM.render(
         <Provider store={store}>
             <App />
         </Provider>,
