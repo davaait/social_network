@@ -5,6 +5,7 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {Profile} from "./components/Profile/Profile";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import {UsersContainer} from "./components/Users/UsersContainer";
 
 const App = () => {
     return (
@@ -16,9 +17,7 @@ const App = () => {
                     <Routes>
                         <Route path='/profile/*' element={<Profile/>}/>
                         <Route path='/dialogs/*' element={<DialogsContainer/>}/>
-                        {/*<Route path='/news/*' element={<Dialogs/>}/>*/}
-                        {/*<Route path='/music/*' element={<Dialogs/>}/>*/}
-                        {/*<Route path='/settings/*' element={<Dialogs/>}/>*/}
+                        <Route path='/users/*' element={<UsersContainer/>}/>
                     </Routes>
                 </div>
             </div>
@@ -27,5 +26,3 @@ const App = () => {
 }
 
 export default App
-
-// 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

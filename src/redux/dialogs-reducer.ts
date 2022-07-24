@@ -1,4 +1,9 @@
-import {DialogsPageType, GenerealACType} from "./store";
+import {DialogsPageType, DialogsType, GenerealACType, MessagesType} from "./store";
+
+enum DialogType {
+    UPDATE_NEW_MESSAGE = 'UPDATE-NEW-MESSAGE-BODY',
+    SEND_MESSAGE = 'SEND-MESSAGE',
+}
 
 const initialState = {
     dialogs: [
@@ -8,28 +13,34 @@ const initialState = {
         {id: 4, name: 'Sasha'},
         {id: 5, name: 'Viktor'},
         {id: 6, name: 'Valera'},
-    ],
-        messages: [
-    {id: 1, message: 'Hi'},
-    {id: 2, message: 'How is your dog?'},
-    {id: 3, message: 'Yo!Yo!Yo!'},
-    {id: 4, message: 'They moved to Mexico city'},
-    {id: 5, message: 'Yes!'},
-],
+    ] as Array<DialogsType>,
+    messages: [
+        {id: 1, message: 'Hi'},
+        {id: 2, message: 'How is your dog?'},
+        {id: 3, message: 'Yo!Yo!Yo!'},
+        {id: 4, message: 'They moved to Mexico city'},
+        {id: 5, message: 'Yes!'},
+    ] as Array<MessagesType>,
     newMessageBody: ""
 }
 
-export const dialogsReducer = (state: DialogsPageType = initialState, action: GenerealACType) => {
+export type InitialStateType = typeof initialState
+
+export const dialogsReducer = (state: InitialStateType = initialState, action: GenerealACType): InitialStateType => {
     switch (action.type) {
-        case 'UPDATE-NEW-MESSAGE-BODY': {
-            state.newMessageBody = action.body
-            return state
+        case DialogType.UPDATE_NEW_MESSAGE: {
+            return {
+                ...state,
+                newMessageBody: action.body
+            }
         }
-        case 'SEND-MESSAGE': {
+        case DialogType.SEND_MESSAGE: {
             let body = state.newMessageBody
-            state.newMessageBody = ''
-            state.messages.push({id: 6, message: body})
-            return state
+            return {
+                ...state,
+                newMessageBody: '',
+                messages: [...state.messages, {id: 6, message: body}]
+            }
         }
         default:
             return state

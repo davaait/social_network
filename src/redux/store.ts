@@ -1,5 +1,6 @@
 import {addPostAC, profileReducer, updateNewPostTextAC} from "./profile-reducer";
 import {dialogsReducer, sendMessageAC, updateNewMessageBodyAC} from "./dialogs-reducer";
+import {followAC, setCurrentPageAC, setUsersAC, unfollowAC, usersReducer, UserType} from "./users-reducer";
 
 export type PostsType = {
     id: number,
@@ -28,6 +29,18 @@ export type DialogsPageType = {
     newMessageBody: string,
 }
 
+export type UsersPageType = {
+    users: Array<UserType>,
+    pageSize: number,
+    totalUsersCount: number,
+    currentPage: number,
+}
+
+export type UserLocation = {
+    city: string
+    country: string
+}
+
 export type SidebarType = {
     id: number,
     name: string,
@@ -36,13 +49,14 @@ export type SidebarType = {
 export type StateType = {
     profilePage: ProfilePageType,
     dialogsPage: DialogsPageType,
-    sidebar: Array<SidebarType>,
+    usersPage: UsersPageType,
+    // sidebar: Array<SidebarType>,
 }
 
 export type StoreType = {
     _state: StateType,
     getState: () => StateType,
-    _callSubscriber: any,
+    _callSubscriber: (state: StateType) => void,
     subscribe: (callback: (state: StateType) => void) => void,
     dispatch: (action: GenerealACType) => void
 }
@@ -76,10 +90,26 @@ export const store: StoreType = {
             ],
             newMessageBody: ""
         },
-        sidebar: [
-            {id: 1, name: 'John'},
-            {id: 2, name: 'Will'}
-        ]
+        usersPage: {
+            users: [
+                // {
+                //     id: 1,
+                //     photoURL: '',
+                //     followed: true,
+                //     fullName: 'Dimych',
+                //     status: 'I am a boss',
+                //     userLocation: {city: 'Minks', country: 'Belarus'},
+                //
+                // },
+            ],
+            currentPage: 1,
+            pageSize: 5,
+            totalUsersCount: 0,
+        },
+        // sidebar: [
+        //     {id: 1, name: 'John'},
+        //     {id: 2, name: 'Will'}
+        // ]
     },
     getState() {
         return this._state
@@ -87,15 +117,24 @@ export const store: StoreType = {
     subscribe(callback) {
         this._callSubscriber = callback;
     },
-    _callSubscriber() {
+    _callSubscriber(state: StateType) {
         console.log('State changed')
     },
-    dispatch(action) {
+    dispatch(action: GenerealACType) {
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._state.usersPage = usersReducer(this._state.usersPage, action)
         // this._state.sidebar = sidebarReducer(this._state.sidebarPage, action)
         this._callSubscriber(this._state)
     },
 }
 
-export type GenerealACType = ReturnType<typeof addPostAC> | ReturnType<typeof updateNewPostTextAC> | ReturnType<typeof updateNewMessageBodyAC> | ReturnType<typeof sendMessageAC>
+export type GenerealACType =
+    ReturnType<typeof addPostAC>
+    | ReturnType<typeof updateNewPostTextAC>
+    | ReturnType<typeof updateNewMessageBodyAC>
+    | ReturnType<typeof sendMessageAC>
+    | ReturnType<typeof followAC>
+    | ReturnType<typeof unfollowAC>
+    | ReturnType<typeof setUsersAC>
+    | ReturnType<typeof setCurrentPageAC>

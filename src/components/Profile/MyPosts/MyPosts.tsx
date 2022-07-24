@@ -7,7 +7,7 @@ type MyPostsPropsType = {
     posts: Array<PostsType>,
     addPost: () => void,
     newPostText: string,
-    updateNewPostText: (textFromInput: string) => void,
+    onPostChange: (textFromInput: string) => void,
 }
 
 export const MyPosts = ({posts, ...props}: MyPostsPropsType) => {
@@ -17,12 +17,12 @@ export const MyPosts = ({posts, ...props}: MyPostsPropsType) => {
     const ref = useRef<HTMLInputElement>(null);
 
     const addPost = () => {
-            props.addPost()
-        }
+        props.addPost()
+    }
     const onPostChange = () => {
         if (ref.current !== null) {
             let textFromInput = ref.current.value
-            props.updateNewPostText(textFromInput)
+            props.onPostChange(textFromInput)
         }
     }
     return (
